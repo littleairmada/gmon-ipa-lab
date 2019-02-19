@@ -1,0 +1,16 @@
+{
+  "_comment": "CAUTION: DO NOT USE IN PRODUCTION and change the passwords below.",
+  "lab_network": "192.168.1",
+  "lab_domain": "gmonlab.local",
+  "Vmware_Network_WAN_net": "VMnet0",
+  "Vmware_Network_WAN_name": "INTERNET",
+  "Vmware_Network_LAN_net": "VMnet5",
+  "Vmware_Network_LAN_name": "Lab-LDAP-NET",
+  "ipa_realm": "IPA",
+  "ipa_domain_fqdn": "ipa.gmonlab.local",
+  "ad_domain": "ad.gmonlab.local",
+  "ipa_admin_user": "admin",
+  "ipa_admin_password": "Pass1234!",
+  "ipa_directory_password": "Pass123456789!",
+  "root_password": "vagrant"
+}

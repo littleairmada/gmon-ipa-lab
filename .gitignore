@@ -1,0 +1,13 @@
+#IDE
+.idea/
+
+#Large Files
+*.iso
+*.box
+*.zip
+
+#VMs
+output-*
+
+#Packer Cache
+packer_cache/

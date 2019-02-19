@@ -1,0 +1,71 @@
+{
+  "builders": [
+    {
+      "type": "vmware-iso",
+	  "format": "ova",
+      "guest_os_type": "other3xlinux-64",
+      "iso_url": "{{user `mirror`}}/CentOS/7/isos/x86_64/CentOS-7-x86_64-DVD-1810.iso",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
+      "output_directory": "output-log01-{{build_type}}",
+      "vm_name": "log01",
+      "disk_size": "{{user `disk_size`}}",
+	  "memory": "{{user `memory`}}",
+      "headless": "{{user `headless`}}",
+	  "floppy_files": [
+        "kickstarts/log01.ks"
+      ],
+      "boot_wait": "10s",
+      "boot_command": [
+        "<esc><esc><wait5>linux net.ifnames=0 biosdevname=0 inst.text inst.ks=hd:fd0:/log01.ks<enter><wait>"
+      ],
+      "ssh_timeout": "{{user `ssh_timeout`}}",
+	  "ssh_pty" : true,
+      "ssh_username": "root",
+      "ssh_password": "vagrant",
+	  "ssh_host": "192.168.1.200",
+	  "communicator": "ssh",
+      "shutdown_command": "shutdown -h now",
+      "vmdk_name": "log01",
+	  "vmx_template_path": "templates/labvm.template"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "scripts": [
+        "scripts/sshd.sh",
+		"scripts/elk-install.sh",
+        "scripts/minimize.sh"
+      ]
+    },
+	{
+      "type": "file",
+      "source": "/etc/pki/tls/certs/logstash-forwarder.crt",
+      "destination": "logstash-forwarder.crt",
+	  "direction": "download"
+	}
+  ],
+  "post-processors": [
+    {
+      "type": "vagrant",
+      "compression_level": "{{user `compression_level`}}",
+      "output": "log01.box"
+    },
+    {
+      "type": "compress",
+      "output": "log01.zip"
+    }
+  ],
+  "variables": {
+    "compression_level": "6",
+    "cpus": "1",
+    "disk_size": "20000",
+    "headless": "false",
+    "iso_checksum": "7AC72A080CE8CA79D39804F713684119B908941A",
+    "iso_checksum_type": "sha1",
+    "memory": "1024",
+    "mirror": "http://mirror.rackspace.com",
+    "ssh_timeout": "60m"
+  }
+}
